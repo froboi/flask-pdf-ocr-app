@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF OCR Extractor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Estrai Testo da PDF con OCR</h1>
+        <p>Carica un file PDF per convertirlo in testo utilizzando Tesseract OCR.</p>
+
+        {% if error %}
+            <div class="error-box">
+                <p><strong>Errore:</strong> {{ error }}</p>
+            </div>
+        {% endif %}
+
+        {% if not file_uploaded %}
+            <form action="/" method="post" enctype="multipart/form-data" class="upload-form">
+                <label for="pdf_file" class="file-label">Scegli un file PDF</label>
+                <input type="file" id="pdf_file" name="pdf_file" accept=".pdf" required>
+                <button type="submit" class="btn btn-primary">Estrai Testo</button>
+            </form>
+        {% endif %}
+
+        {% if extracted_text %}
+            <div class="result-container">
+                <h2>Testo Estratto</h2>
+                <textarea readonly>{{ extracted_text }}</textarea>
+                <div class="button-group">
+                    <a href="/download" class="btn btn-secondary">Scarica .txt</a>
+                    <a href="/clear" class="btn btn-tertiary">Nuova Conversione</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
